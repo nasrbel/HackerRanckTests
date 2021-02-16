@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="libraryTable">
+    <library name="autoML-master">
+      <CLASSES>
+        <root url="file://$USER_HOME$/Téléchargements/autoML-master" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$USER_HOME$/Téléchargements/autoML-master/math/src/main/java" />
+      </SOURCES>
+    </library>
+  </component>
+</project>
