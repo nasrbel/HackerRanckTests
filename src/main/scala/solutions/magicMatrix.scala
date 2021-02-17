@@ -1,13 +1,5 @@
 package solutions
-import java.io._
-import java.math._
-import java.security._
-import java.text._
-import java.util._
-import java.util.concurrent._
-import java.util.function._
-import java.util.regex._
-import java.util.stream._
+
 
 class magicMatrix {
 
@@ -23,28 +15,17 @@ class magicMatrix {
    */
 
     def getMissingNumbers(matrix:Array[Array[Int]]): List[Int]={
-      matrix.map(_.distinct)
+      var list : List[Int] = List()
+      matrix.map(_.distinct).map(e => e.toList+:list )
+      (1 to 9 ).toList.filterNot(p => list.contains(p))
     }
 
-    def isItAGoodPosition(matrix: Array[Array[Int]],i:Int, j: Int ) : (Int,Int) = {
-      // test horizontal sums
-      var i0 =i
-      var j0 = j
-      val n = matrix.length
-      if(i > n || j > n  ){
-        return (-1,-1)
-      }else {
-        val sumOfLine = matrix(i).sum
-        val sumOfColumn = matrix.map(line => line(j) ).sum
 
-      }
-
-    }
-
-  def formingMagicSquare(s: Array[Array[Int]]): Int = {
-
-
-  }
+//
+//  def formingMagicSquare(s: Array[Array[Int]]): Int = {
+//
+//
+//  }
 
   def main(args: Array[String]) {
     val stdin = scala.io.StdIn
@@ -56,7 +37,8 @@ class magicMatrix {
       s(i) = stdin.readLine.split(" ").map(_.trim.toInt)
     }
 
-    val result = formingMagicSquare(s)
+    //val result = formingMagicSquare(s)
+    val result = getMissingNumbers(s)
 
     println(result)
 
