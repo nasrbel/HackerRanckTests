@@ -1,7 +1,7 @@
 package solutions
 
 
-class magicMatrix {
+object magicMatrix {
 
   /**
    * In the case of 3x3 matrix the magic sum is 15
@@ -15,17 +15,26 @@ class magicMatrix {
    */
 
     def getMissingNumbers(matrix:Array[Array[Int]]): List[Int]={
+
+      //This function returns the list of missing integers
+      // Note that the case is not complicated because the matrix is 3x3
+      // complexity = 3 For loops + (9 - Number of distinct element in the matrix)
       var list : List[Int] = List()
-      matrix.map(_.distinct).map(e => e.toList+:list )
+      for(e <- matrix){
+        list = list ++ e.toList.distinct
+      }
+
       (1 to 9 ).toList.filterNot(p => list.contains(p))
     }
 
 
-//
-//  def formingMagicSquare(s: Array[Array[Int]]): Int = {
-//
-//
-//  }
+
+  def formingMagicSquare(s: Array[Array[Int]]): Int = {
+
+
+
+
+  }
 
   def main(args: Array[String]) {
     val stdin = scala.io.StdIn
