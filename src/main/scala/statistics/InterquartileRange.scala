@@ -20,14 +20,14 @@ object InterquartileRange {
 
 
 
-  def QoneQtwo(arr: List[Int]): (Int, Int) = {
+  def QoneQtwo(arr: List[Int]): (Double, Double) = {
     val arr0 = arr.sorted
     val n = arr0.length
-    val a1 = if (n % 2 == 1) arr0.filter(e => e < median(arr0)).sorted else arr0.filter(e => e < median(arr0)).sorted
+    val a1 = if (n % 2 == 1) arr0.filter(e => e <= median(arr0)).sorted else arr0.filter(e => e < median(arr0)).sorted
     val q1 = median(a1)
-    val a2 = if (n % 2 == 1) arr0.filter(e => e > median(arr0)).sorted else arr0.filter(e => e > median(arr0)).sorted
+    val a2 = if (n % 2 == 1) arr0.filter(e => e >= median(arr0)).sorted else arr0.filter(e => e > median(arr0)).sorted
     val q2 = median(a2)
-    (q1, q2)
+    (q1.toDouble, q2.toDouble)
   }
 
   def getThreeQ(arr: List[Int]): (List[Int], List[Int], List[Int]) = {
