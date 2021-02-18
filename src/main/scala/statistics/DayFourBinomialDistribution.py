@@ -25,12 +25,12 @@ def main():
 
     def binoprobability(x, n, p, q):
         pr = 0.0
-        for r in range(x, n):
+        for r in range(x, n+1):
             pr += probability(r, n, p, q)
         return pr
 
-    p = 1.09/2.09
-    q = 1-p
+    p = float(1.09/2.09)
+    q = float(1)-p
     value = binoprobability(3, 6, p, q)
     print("{:.3f}".format(value))
 
