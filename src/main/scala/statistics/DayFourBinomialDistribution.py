@@ -15,7 +15,7 @@ def main():
         if n == 0:
             return 1
         else:
-            return factorial(n - 1)
+            return n*factorial(n - 1)
 
     def combination(x, n):
         return float(factorial(n) / (factorial(x) * factorial(n - x)))
@@ -31,7 +31,6 @@ def main():
 
     p = 1.09/2.09
     q = 1-p
-    print(p)
     value = binoprobability(3, 6, p, q)
     print("{:.3f}".format(value))
 
