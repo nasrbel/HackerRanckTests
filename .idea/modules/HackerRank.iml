@@ -269,5 +269,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Python 3.7 (ingestion) interpreter library" level="application" />
   </component>
 </module>
