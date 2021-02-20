@@ -43,12 +43,12 @@ object MatrixRotation {
   }
 
 
-  def rotateCircle(l : List[Int],r :Int) : List[Int] = {
-    if(r==0){
-      return  l
-    }else{
+  def rotateCircle(l: List[Int], r: Int): List[Int] = {
+    if (r == 0) {
+      return l
+    } else {
       val xs2 = new RotatedIterator(l, l.length - 1)
-      return rotateCircle(xs2.toList,r-1)
+      return rotateCircle(xs2.toList, r - 1)
 
     }
 
@@ -57,66 +57,74 @@ object MatrixRotation {
   }
 
 
-    def getCircles(inputArray: Array[Array[Int]], filter1: (Int,Int), filter2: (Int,Int),r : Int): List[List[Int]] ={
-      var filter10 = filter1
-      var filter20 = filter2
+  def getCircles(inputArray: Array[Array[Int]], filter1: (Int, Int), filter2: (Int, Int), r: Int): List[List[Int]] = {
+    var filter10 = filter1
+    var filter20 = filter2
 
-      val n = inputArray.length
-      val m = inputArray(0).length
-      var l = List[List[Int]]()
+    val n = inputArray.length
+    val m = inputArray(0).length
+    var l = List[List[Int]]()
 
-      if(filter10._2==1 && filter20._2 == 1 ){
-        l = l:+ rotateCircle(getCircle(inputArray),r)
-        return l
+    if (filter10._2 == 1 && filter20._2 == 1) {
+      l = l :+ rotateCircle(getCircle(inputArray), r)
+      return l
 
-      }else{
-        val newArr: Array[Array[Int]] = inputArray.zipWithIndex.filter(e => e._2 >= filter10._1 && e._2 <= filter10._2)
-          .map(_._1).map(e => e.zipWithIndex).map(e => e.filter(el => el._2 >= filter20._1 && el._2 <= filter20._2))
-          .map(e => e.map(el => el._1))
-        val circle = rotateCircle(getCircle(newArr),r)
-        filter10 = (filter10._1 +1,filter10._2-1)
-        filter20 = (filter20._1 +1,filter20._2-1)
-//        l = l :+circle
-       // println(filter10,filter20)
-        l = getCircles(inputArray,filter10,filter20,r):+circle
-        return l
-
-
-
-      }
-      List(List(1))
+    } else {
+      val newArr: Array[Array[Int]] = inputArray.zipWithIndex.filter(e => e._2 >= filter10._1 && e._2 <= filter10._2)
+        .map(_._1).map(e => e.zipWithIndex).map(e => e.filter(el => el._2 >= filter20._1 && el._2 <= filter20._2))
+        .map(e => e.map(el => el._1))
+      val circle = rotateCircle(getCircle(newArr), r)
+      filter10 = (filter10._1 + 1, filter10._2 - 1)
+      filter20 = (filter20._1 + 1, filter20._2 - 1)
+      //        l = l :+circle
+      // println(filter10,filter20)
+      l = getCircles(inputArray, filter10, filter20, r) :+ circle
+      return l
 
 
     }
+    List(List(1))
 
-  def constructNewArray(seq : List[List[Int]], n : Int, m :Int) = {
+
+  }
+
+  def constructNewArray(seq: List[List[Int]], n: Int, m: Int): Array[List[Int]] = {
 
     val outputArray = Array.ofDim[Int](n, m)
-    val xs10 = seq.head
+    var s = seq
+    //println(s)
+    val xs10 = s.head
     outputArray(0) = xs10.slice(0, n).toArray.reverse
-    for(i <- 1 until n-1){
-      outputArray(i)(0) = xs10(n +i-1)
+    for (i <- 1 until n - 1) {
+      outputArray(i)(0) = xs10(n + i - 1)
 
     }
-    outputArray(n-1) = xs10.slice(n, 2*n).toArray
+    outputArray(n - 1) = xs10.slice(n+m-2, 2 * n+m-2).toArray
+    println(outputArray(n-1).toList)
     //*****************************************
     var xs = xs10
-    for(i <- 1 to n-2 ){
-      outputArray(i)(m-1) = xs.last
+    for (i <- 1 to n - 2) {
+      outputArray(i)(m - 1) = xs.last
       xs = xs.dropRight(1)
+      println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+      println(xs)
+      println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+    }
+    s = s.tail
+   // println(s)
+    val xs20 = s.head
 
-
+    //****************************************************************
+    for (j <- 1 until m - 1) {
+      outputArray(1)(j) = xs20.slice(0, n - 2).toArray.reverse(j - 1)
+      // outputArray(1)(2) = xs20.slice(0, 3 - 1).toArray.reverse(1)
 
     }
 
-    //****************************************************************
+    for (j <- 1 until m - 1) outputArray(2)(j) = xs20(j + 1)
+    //outputArray(2)(2) = xs20(3)
 
-//    outputArray(1)(1) = xs20.slice(0, 3 - 1).toArray.reverse(0)
-//    outputArray(1)(2) = xs20.slice(0, 3 - 1).toArray.reverse(1)
-//
-//    outputArray(2)(1) = xs20(2)
-//    outputArray(2)(2) = xs20(3)
-
+    outputArray.map(_.toList)
 
 
   }
@@ -152,20 +160,20 @@ object MatrixRotation {
     val xs2 = new RotatedIterator(seq2, seq2.length - 1)
     val xs20 = xs2.toList
     //construct the new array
-    val outputArray = Array.ofDim[Int](n, m)
-//    println(xs1.length)
-//    println(xs1.toList)
+    // val outputArray = Array.ofDim[Int](n, m)
+    //    println(xs1.length)
+    //    println(xs1.toList)
 
-    val  l = getCircles(arr,(0,n-1),(0,m-1),1).dropRight(1)
+    val l = getCircles(arr, (0, n - 1), (0, m - 1), 1).dropRight(1)
     println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
-   println(l)
+    println(l)
 
 
+    val outputArray = constructNewArray(l, n, m)
 
 
-
-//    outputArray.foreach(e => println(e.toList))
+   outputArray.foreach(e => println(e))
 
   }
 
