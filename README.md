@@ -3,7 +3,7 @@ https://www.hackerrank.com/nasreedine_belg1?hr_r=1
 
 In this bucket you will find : 
 
--Some of the hackerrank website solution based on my conception.
+Some of the hackerrank website solution based on my conception.
 
 The languages that I am using are: 
 
