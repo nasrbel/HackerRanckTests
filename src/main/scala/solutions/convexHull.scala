@@ -12,7 +12,7 @@ package solutions
         def apply(a: Array[Int]): Point = Point(a(0), a(1))
       }
 
-      object Solution {
+      object Solution0 {
         def ccw(p1: Point, p2: Point, p3: Point): Boolean = {
           (p2.x - p1.x) * (p3.y - p1.y) - (p2.y - p1.y) * (p3.x - p1.x) >= 0
         }

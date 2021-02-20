@@ -21,29 +21,49 @@ object MatrixRotation {
       // the idea is to get the first circle of tha matrix
       val n = arr.length // number of rows
       val m = arr(0).length // number of cols
-      val circleArray = Array.ofDim[Int](2*n+2*m)
+      val circleArray = Array.ofDim[Int](2*n+2*m-4)
       var k = 0
-      for (j <- 0 until m){
-        circleArray(k) = arr(1)(j)
+      for (j <- m-1 to 0 by -1){
+        circleArray(k) = arr(0)(j)
         k += 1
       }
-      for(i <- 0 until n){
-        circleArray(k) = arr(i)(1)
+      for(i <- 1 until n){
+        circleArray(k) = arr(i)(0)
         k += 1
       }
-      for(j <- 0 until m){
+      for(j <- 1 until m){
         circleArray(k) = arr(n-1)(j)
         k += 1
       }
-      for(i <- n-1 to 0 by -1){
+      for(i <- n-2 to 1 by -1){
         circleArray(k) = arr(i)(m-1)
         k += 1
       }
       circleArray.toList
     }
 
+  class RotatedIterator[A](seq: Seq[A], start: Int) extends Iterator[A] {
+    var (before, after) = seq.splitAt(start)
+    def next: A = after match {
+      case Seq()  =>
+        val (h :: t) = before; before = t; h
+      case h :: t => after = t; h
+    }
+    def hasNext: Boolean = after.nonEmpty || before.nonEmpty
+  }
+
   def main(args: Array[String]): Unit = {
 
+    val triplet = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt)
+    val n = triplet(0)
+    val m = triplet(1)
+    val r = triplet(2)
+    val arr = Array.ofDim[Int](n,m)
+    (0 until n).foreach(k => arr(k) = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt))
+    val seq = getCircle(arr)
+    println(getCircle(arr))
+    val xs = new RotatedIterator(seq, 11)
+    println(xs.toList)
 
   }
 
