@@ -60,10 +60,16 @@ object MatrixRotation {
     val r = triplet(2)
     val arr = Array.ofDim[Int](n,m)
     (0 until n).foreach(k => arr(k) = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt))
-    val seq = getCircle(arr)
+    val seq1 = getCircle(arr)
     println(getCircle(arr))
-    val xs = new RotatedIterator(seq, 11)
-    println(xs.toList)
+    val xs1 = new RotatedIterator(seq1, 11)
+    println(xs1.toList)
+    val newArr: Array[Array[Int]] = arr.zipWithIndex.filter(e => e._2 >=1 &&  e._2 <= n-2).map(_._1).map(e => e.zipWithIndex).map(e => e.filter(el => el._2 >= 1 && el._2 <= m-2)).map(e => e.map(el =>el._1))
+    val seq2 = getCircle(newArr)
+    println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    val xs2 = new RotatedIterator(seq2, seq2.length -1)
+    println(xs2.toList)
+
 
   }
 
