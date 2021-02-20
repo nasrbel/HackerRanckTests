@@ -2,8 +2,10 @@
 https://www.hackerrank.com/nasreedine_belg1?hr_r=1
 
 In this bucket you will find : 
+
 -Some of the hackerrank website solution based on my conception.
-THe languages that I am using are: 
+
+The languages that I am using are: 
 
 -Python (3.7): For statistics and DS or ML problems
 
