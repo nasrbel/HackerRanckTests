@@ -68,8 +68,20 @@ object MatrixRotation {
     doubleFiltredArr.map( ele => ele.map( v => (v._1,(v._2._1-1,v._2._2))     ) )
   }
 
+  def getVTwo(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
+
+    val pm: Int =  m/2 -1
+    val pn = n/2 -1
+    val filtredarr = arr.map(e => (e._1.filter(e => e._2 <= pm),e._2)).map(e => e._1.map(el => (el._1,(e._2,el._2)))).tail.dropRight(1)
+    val doubleFiltredArr = filtredarr.map( e => if(e == filtredarr.head  || e == filtredarr.last ) e.dropRight(1) else  e)
+    //    val reorderedArr =  filtredarr.map(e => if(e != filtredarr.head ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
+    println(doubleFiltredArr)
+
+    doubleFiltredArr.map( ele => ele.map( v => (v._1,(v._2._1+1,v._2._2))     ) )
+  }
+
   def main(args: Array[String]): Unit = {
-    println(getVOne(inputArray,n,m))
+
   }
 
 
