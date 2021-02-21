@@ -29,58 +29,113 @@ object MatrixRotation {
    * I will take into considerations two points: 1) if N  or M is odd or even
    *                                             2) separate some index (i,j) that can be in both directions H and V
    */
-  val triplet: Array[Int] = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt)
-  val n: Int = triplet(0)
-  val m: Int = triplet(1)
-  val r: Int = triplet(2)
-  val arr: Array[Array[Int]] = Array.ofDim[Int](n, m)
-  (0 until n).foreach(k => arr(k) = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt))
-  val inputArr = arr.map(_.toList).toList
-  val inputArray: List[(List[(Int, Int)], Int)] = inputArr.zipWithIndex.map(e => (e._1.zipWithIndex,e._2))
+
 
   def getHOne(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
 
-    val p: Int =  n/2 -1
+    val pm: Int =  if(n >= m) n-m +1  else 0
+    val p = (n-pm)/2
+
     val filtredarr = arr.filter(e => e._2 <= p)
      val reorderedArr =  filtredarr.map(e => if(e != filtredarr.head ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
-    println(reorderedArr)
+    //println(reorderedArr)
     reorderedArr.map( ele => ele.map( v => if(v==ele.head) (v._1,(v._2._1+1,v._2._2)) else (v._1,(v._2._1,v._2._2-1))    ) )
   }
 
   def getHTwo(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
-
-    val p: Int =  n/2
-    val filtredarr = arr.filter(e => e._2 > p)
+   //if (n % 2 == 0) n/2 -1 else
+   val pm: Int =  if(n >= m) n-m +1  else 0
+    val p = (n-pm)/2
+   // println(n,p)
+    val filtredarr = arr.filter(e => e._2 >= n-1 -p)
+   // println(filtredarr)
     val reorderedArr =  filtredarr.map(e => if(e != filtredarr.last ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
-    println(reorderedArr)
+   // println(reorderedArr)
     reorderedArr.map( ele => ele.map( v => if(v==ele.last) (v._1,(v._2._1-1,v._2._2)) else (v._1,(v._2._1,v._2._2+1))    ) )
   }
 
   def getVOne(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
 
-    val pm: Int =  m/2 -1
-    val pn = n/2 -1
-    val filtredarr = arr.map(e => (e._1.filter(e => e._2 > pm),e._2)).map(e => e._1.map(el => (el._1,(e._2,el._2)))).dropRight(1)
-    val doubleFiltredArr = filtredarr.map( e => if(e == filtredarr.head || e == filtredarr.tail.head || e == filtredarr.last) e.tail else  e).tail
+    val p: Int =  if(m >= n) n-m +1  else 0
+    val pm = (m-p)/2
+    val filtredarr = arr.map(e => (e._1.filter(e => e._2 > m-1-pm),e._2)).map(e => e._1.map(el => (el._1,(e._2,el._2)))).dropRight(1)
+    //map( e => if(e == filtredarr.head || e == filtredarr.tail.head || e == filtredarr.last) e.tail else  e)
+    val doubleFiltredArr = filtredarr.tail
 //    val reorderedArr =  filtredarr.map(e => if(e != filtredarr.head ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
-    println(doubleFiltredArr)
-    filtredarr
+   println(filtredarr)
+ //   println(doubleFiltredArr)
+   // filtredarr
     doubleFiltredArr.map( ele => ele.map( v => (v._1,(v._2._1-1,v._2._2))     ) )
   }
 
   def getVTwo(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
 
-    val pm: Int =  m/2 -1
-    val pn = n/2 -1
+    val p: Int =  if(m >= n) n-m +1  else 0
+    val pm = (m-p)/2
     val filtredarr = arr.map(e => (e._1.filter(e => e._2 <= pm),e._2)).map(e => e._1.map(el => (el._1,(e._2,el._2)))).tail.dropRight(1)
     val doubleFiltredArr = filtredarr.map( e => if(e == filtredarr.head  || e == filtredarr.last ) e.dropRight(1) else  e)
     //    val reorderedArr =  filtredarr.map(e => if(e != filtredarr.head ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
-    println(doubleFiltredArr)
+   // println(filtredarr)
 
     doubleFiltredArr.map( ele => ele.map( v => (v._1,(v._2._1+1,v._2._2))     ) )
   }
 
+
+  def rotateArray(inputArr : List[List[Int]], n : Int, m :Int,  r : Int): List[List[Int]] ={
+   val inputArray = inputArr.zipWithIndex.map(e => (e._1.zipWithIndex,e._2))
+    if(r==0){
+
+      return inputArr
+    }else{
+      val h1 = getHOne(inputArray,n,m)
+     // println(h1)
+      val h2 =  getHTwo(inputArray,n,m)
+     //println(h2)
+      val v1 = getVOne(inputArray,n,m)
+      println(v1)
+      val v2 = getVTwo(inputArray,n,m)
+     // println(v2)
+      val outputArray = Array.ofDim[Int](n,m)
+      h1.foreach(e => for (elem <- e) {
+        outputArray(elem._2._1)(elem._2._2) = elem._1
+      })
+      h2.foreach(e => for (elem <- e) {
+        outputArray(elem._2._1)(elem._2._2) = elem._1
+      })
+      v1.foreach(e => for (elem <- e) {
+        outputArray(elem._2._1)(elem._2._2) = elem._1
+      })
+      v2.foreach(e => for (elem <- e) {
+        outputArray(elem._2._1)(elem._2._2) = elem._1
+      })
+      return rotateArray(outputArray.map(_.toList).toList,n,m,r-1)
+    }
+    List(List(1))
+  }
+
   def main(args: Array[String]): Unit = {
+
+
+
+    val triplet: Array[Int] = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt)
+    val n: Int = triplet(0)
+    val m: Int = triplet(1)
+    val r: Int = triplet(2)
+    val arr: Array[Array[Int]] = Array.ofDim[Int](n, m)
+    (0 until n).foreach(k => arr(k) = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt))
+    val inputArr = arr.map(_.toList).toList
+    //val inputArray: List[(List[(Int, Int)], Int)] = inputArr.zipWithIndex.map(e => (e._1.zipWithIndex,e._2))
+    val outputArray = rotateArray(inputArr,n,m,r)
+
+    val concatResults: (String, String) => String = (left, right) => {
+      left + " " + right
+    }
+    outputArray.foreach(e => {
+      var str = ""
+      str = str + e.map(_.toString).reduce((x,y) => concatResults(x,y))
+       println(str)
+
+    })
 
   }
 
