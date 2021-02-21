@@ -29,6 +29,37 @@ object MatrixRotation {
    * I will take into considerations two points: 1) if N  or M is odd or even
    *                                             2) separate some index (i,j) that can be in both directions H and V
    */
+  val triplet: Array[Int] = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt)
+  val n: Int = triplet(0)
+  val m: Int = triplet(1)
+  val r: Int = triplet(2)
+  val arr: Array[Array[Int]] = Array.ofDim[Int](n, m)
+  (0 until n).foreach(k => arr(k) = scala.io.StdIn.readLine().split(" ").map(_.trim.toInt))
+  val inputArr = arr.map(_.toList).toList
+  val inputArray: List[(List[(Int, Int)], Int)] = inputArr.zipWithIndex.map(e => (e._1.zipWithIndex,e._2))
+
+  def getHOne(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
+
+    val p: Int =  n/2 -1
+    val filtredarr = arr.filter(e => e._2 <= p)
+     val reorderedArr =  filtredarr.map(e => if(e != filtredarr.head ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
+    println(reorderedArr)
+    reorderedArr.map( ele => ele.map( v => if(v==ele.head) (v._1,(v._2._1+1,v._2._2)) else (v._1,(v._2._1,v._2._2-1))    ) )
+  }
+
+  def getHTwo(arr: List[(List[(Int, Int)], Int)],n : Int, m: Int) ={
+
+    val p: Int =  n/2
+    val filtredarr = arr.filter(e => e._2 > p)
+    val reorderedArr =  filtredarr.map(e => if(e != filtredarr.last ) (e._1.slice(1,e._1.length-1),e._2) else e).map(e => e._1.map(el => (el._1,(e._2,el._2))))
+    println(reorderedArr)
+    reorderedArr.map( ele => ele.map( v => if(v==ele.last) (v._1,(v._2._1-1,v._2._2)) else (v._1,(v._2._1,v._2._2+1))    ) )
+  }
+
+  def main(args: Array[String]): Unit = {
+    println(getHTwo(inputArray,n,m))
+  }
+
 
 
 
