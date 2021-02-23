@@ -5,7 +5,9 @@ def main():
     # A Poisson random variable is the number of successes that result
     # from a Poisson experiment. The probability distribution of a Poisson
     # random variable is called a Poisson distribution
-    #the mean of the cost is : a + b*E(x^2)= a + b*(lambda + lambda^2)
+    def poisson_distribution(n, lambda_value):
+        return lambda_value**n * math.exp(-lambda_value)/math.factorial(n)
+
     def cost_a(x):
         cost_value = 160 + 40 * (x**2 + x)
         return '{:.3f}'.format(cost_value)
@@ -13,6 +15,8 @@ def main():
     def cost_b(y):
         cost_value = 128 + 40 * (y**2 + y)
         return '{:.3f}'.format(cost_value)
+
+
 
     #we need to compute the number of success per day
     line = input().split(' ')
