@@ -38,7 +38,7 @@ def main():
 
     def geometric_distribution(n0, p):
         q = 1 - p
-        return p ** (n0 - 1) * q
+        return p **(n0 - 1) * q
 
     arr = [int(a) for a in input().split(' ')]
     n = int(input())
@@ -48,10 +48,7 @@ def main():
     # let's compute the probability of having a failure in n trials
     # having one failure after one success or having 1 failure after 2 success or ... or having
     # one failure after n  success
-
-    for i in range(1, n + 1):
-        prob += geometric_distribution(i, p)
-
+    prob = geometric_distribution(n, p)
     print('{:.3f}'.format(prob))
 
 
