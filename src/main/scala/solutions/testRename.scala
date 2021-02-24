@@ -15,10 +15,12 @@ object testRename{
    *  2. STRING oldName
    */
 
-  def sub(string: String, substring: String): Boolean= { // Keep track of our position in the string.
+  def sub(string: String, substring: String): Boolean= {
+    // Keep track of our position in the string.
     var index = 0
     // Iterate through all of the characters in the substring.
-    for (character <- substring.toCharArray) { // Find the current character starting from the last character we stopped on.
+    for (character <- substring.toCharArray) {
+      // Find the current character starting from the last character we stopped on.
       index = string.indexOf(character, index)
       // If the method returned -1, the character was not found, so the result is false.
       if (index == -1){
@@ -30,10 +32,11 @@ object testRename{
   }
 
   def renameFile(newName: String, oldName: String): Int = {
+    println(oldName)
       if(oldName.isEmpty){
         return 0
       }else if(sub(oldName, newName)) {
-        return 1 + renameFile(newName, oldName)
+        return 1 + renameFile(newName, oldName.tail)
 
       }
     0
@@ -56,5 +59,8 @@ object testRename{
 
 
   }
+  // /* This is a // // comment */
+
+  /*ttttt/*jjj*/*/
 }
 

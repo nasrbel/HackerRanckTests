@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Date 02/20/2016
- * @author Tushar Roy
+ *
+ * @author  Nassereddine BELGHITH
  *
  * Given nxn board place n queen on this board so that they dont attack each other. One solution is to find
  * any placement of queens which do not attack each other. Other solution is to find all placements of queen
@@ -25,6 +25,9 @@ public class NQueenProblem {
             this.col = col;
         }
     }
+    // /* This is a // // comment */
+    /* This is also a comment // More comments */
+
 
     public Position[] solveNQueenOneSolution(int n) {
         Position[] positions = new Position[n];
