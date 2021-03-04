@@ -4,8 +4,8 @@ import math
 def main():
     x = int(input())
     n = int(input())
-    mu = int(input())
-    sigma = int(input())
+    mu = float(input())
+    sigma = float(input())
     mu_sum = n * mu
     sigma_sum = math.sqrt(n) * sigma
 
